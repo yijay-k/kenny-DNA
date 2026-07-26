@@ -114,7 +114,7 @@ def print_activity_table(title, activities):
 
 
 def run():
-    print(section("Problem 1 · Activity Selection  (Greedy)"))
+    print(section("🎯 Problem 1 · Activity Selection  (Greedy)"))
     while True:
         activities = get_activities()
         print_activity_table("All activities entered:", activities)
@@ -127,18 +127,18 @@ def run():
         print(paint("\nGreedy decisions (in finish-time order):", "1"))
         for step in trace:
             act = step["activity"]
-            mark = paint("● SELECTED", "92") if step["chosen"] else paint("○ skip    ", "90")
+            mark = paint("● SELECTED", "1") if step["chosen"] else paint("○ skip    ", "2")
             print(f"  {mark}  Activity {act['id']} ({act['start']}-{act['finish']}): {step['reason']}")
 
         print_activity_table("Final selected activities:", selected)
         print("\nMaximum non-overlapping activities: "
-              + paint(str(len(selected)), "1", "92"))
+              + paint(str(len(selected)), "1"))
 
         # Validate: for small inputs, confirm greedy == exhaustive optimum.
         if len(activities) <= 12:
             optimum = brute_force_max(activities)
             ok = optimum == len(selected)
-            verdict = paint("OPTIMAL", "1", "92") if ok else paint("MISMATCH!", "1", "91")
+            verdict = paint("OPTIMAL", "1") if ok else paint("MISMATCH!", "1", "91")
             print(f"Validation (exhaustive search): optimal = {optimum} -> {verdict}")
         else:
             print(paint("Validation skipped (too many activities for exhaustive check).", "2"))
@@ -148,5 +148,5 @@ def run():
 
 
 if __name__ == "__main__":
-    print(box(["Problem 1 · Activity Selection (Greedy)"], "96"))
+    print(box(["🎯 Problem 1 · Activity Selection (Greedy)"], "95"))
     run()

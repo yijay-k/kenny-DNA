@@ -110,7 +110,7 @@ def recurrence_trace(dp, choice, amount):
 
 
 def run():
-    print(section("Problem 2 · Coin Change  (Dynamic Programming)"))
+    print(section("🪙 Problem 2 · Coin Change  (Dynamic Programming)"))
     while True:
         coins = get_denominations()
         amount = read_int("Enter target amount: ", minimum=0)
@@ -128,9 +128,9 @@ def run():
         if min_coins is None:
             print(paint(f"\nNo combination of {coins} can make up {amount}.", "91"))
         else:
-            print("\nMinimum coins needed: " + paint(str(min_coins), "1", "92"))
+            print("\nMinimum coins needed: " + paint(str(min_coins), "1"))
             if combination:
-                print("Combination used: " + paint(group_combination(combination), "96"))
+                print("Combination used: " + paint(group_combination(combination), "1"))
                 print(paint("\nOptimal substructure (how dp[amount] was built):", "1"))
                 for line in recurrence_trace(dp, choice, amount):
                     print(line)
@@ -142,5 +142,5 @@ def run():
 
 
 if __name__ == "__main__":
-    print(box(["Problem 2 · Coin Change (Dynamic Programming)"], "96"))
+    print(box(["🪙 Problem 2 · Coin Change (Dynamic Programming)"]))
     run()

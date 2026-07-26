@@ -2,11 +2,11 @@ SAMPLE RUN - Problem 3: Travelling Salesman (Nearest-Neighbour)
 Run: python3 problem3_tsp_heuristic.py
 Input: 6 cities -> n
 ----------------------------------------------------------
-╭───────────────────────────────────────────────────────────────╮
-│ Problem 3 · Travelling Salesman (Nearest-Neighbour Heuristic) │
-╰───────────────────────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────────────────────╮
+│ 🧭 Problem 3 · Travelling Salesman (Nearest-Neighbour Heuristic) │
+╰──────────────────────────────────────────────────────────────────╯
 
-━━━  Problem 3 · Travelling Salesman  (Nearest-Neighbour)  ━━━
+━━━  🧭 Problem 3 · Travelling Salesman  (Nearest-Neighbour)  ━━━
 Enter number of cities (>= 3): City 1 name:   A - x coordinate (>= 0):   A - y coordinate (>= 0): City 2 name:   B - x coordinate (>= 0):   B - y coordinate (>= 0): City 3 name:   C - x coordinate (>= 0):   C - y coordinate (>= 0): City 4 name:   D - x coordinate (>= 0):   D - y coordinate (>= 0): City 5 name:   E - x coordinate (>= 0):   E - y coordinate (>= 0): City 6 name:   F - x coordinate (>= 0):   F - y coordinate (>= 0): 
 [Nearest Neighbour] start = A
   Route: A -> C -> E -> D -> B -> F -> A

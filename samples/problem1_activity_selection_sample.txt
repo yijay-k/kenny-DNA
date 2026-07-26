@@ -2,11 +2,11 @@ SAMPLE RUN - Problem 1: Activity Selection (Greedy)
 Run: python3 problem1_activity_selection.py
 Input: 6 activities -> n
 ----------------------------------------------------------
-╭─────────────────────────────────────────╮
-│ Problem 1 · Activity Selection (Greedy) │
-╰─────────────────────────────────────────╯
+╭────────────────────────────────────────────╮
+│ 🎯 Problem 1 · Activity Selection (Greedy) │
+╰────────────────────────────────────────────╯
 
-━━━  Problem 1 · Activity Selection  (Greedy)  ━━━━━━━━━━
+━━━  🎯 Problem 1 · Activity Selection  (Greedy)  ━━━━━━━
 Enter number of activities: Activity 1 - start time: Activity 1 - finish time: Activity 2 - start time: Activity 2 - finish time: Activity 3 - start time: Activity 3 - finish time: Activity 4 - start time: Activity 4 - finish time: Activity 5 - start time: Activity 5 - finish time: Activity 6 - start time: Activity 6 - finish time: 
 All activities entered:
 ╭─────┬───────┬────────╮

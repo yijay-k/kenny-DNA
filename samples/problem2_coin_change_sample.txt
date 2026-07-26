@@ -2,11 +2,11 @@ SAMPLE RUN - Problem 2: Coin Change (Dynamic Programming)
 Run: python3 problem2_coin_change.py
 Input: coins 1,3,4 -> amount 11 -> n
 ----------------------------------------------------------
-╭───────────────────────────────────────────────╮
-│ Problem 2 · Coin Change (Dynamic Programming) │
-╰───────────────────────────────────────────────╯
+╭──────────────────────────────────────────────────╮
+│ 🪙 Problem 2 · Coin Change (Dynamic Programming) │
+╰──────────────────────────────────────────────────╯
 
-━━━  Problem 2 · Coin Change  (Dynamic Programming)  ━━━━
+━━━  🪙 Problem 2 · Coin Change  (Dynamic Programming)  ━━━
 Enter coin denominations (comma-separated, e.g. 1,3,4): Enter target amount: 
 DP table  dp[a] = fewest coins to make amount a:
 ╭────────┬───────╮

@@ -13,6 +13,7 @@ colours even when piping. Pure standard library - no external packages.
 import os
 import re
 import sys
+import unicodedata
 
 _COLOR = bool(
     (sys.stdout.isatty() or os.environ.get("FORCE_COLOR"))
@@ -27,18 +28,37 @@ _ANSI_RE = re.compile(r"\033\[[0-9;]*m")
 # ---------------------------------------------------------------------
 
 def paint(text, *codes):
-    """Wrap text in ANSI colour codes (a no-op when colour is disabled)."""
+    """Wrap text in ANSI codes (a no-op when colour is disabled or codes empty)."""
+    codes = [c for c in codes if c]
     if not _COLOR or not codes:
         return text
     return f"\033[{';'.join(codes)}m{text}\033[0m"
 
 
 def visible_len(text):
-    """Length of text ignoring any ANSI colour codes (for alignment)."""
-    return len(_ANSI_RE.sub("", str(text)))
+    """
+    On-screen width of text, ignoring ANSI colour codes and counting wide
+    glyphs (most emoji / CJK) as 2 columns so boxes stay aligned.
+    """
+    stripped = _ANSI_RE.sub("", str(text))
+    width = 0
+    for ch in stripped:
+        if ch in ("‍", "️", "︎") or unicodedata.combining(ch):
+            continue  # zero-width joiner / variation selectors / accents
+        width += 2 if unicodedata.east_asian_width(ch) in ("W", "F") else 1
+    return width
 
 
-def box(lines, code="96", pad=1):
+def center(text, width):
+    """Centre text within `width` columns (colour-aware)."""
+    gap = width - visible_len(text)
+    if gap <= 0:
+        return text
+    left = gap // 2
+    return " " * left + text + " " * (gap - left)
+
+
+def box(lines, code="", pad=1):
     """Draw a rounded box around the given lines (content may be coloured)."""
     width = max((visible_len(l) for l in lines), default=0)
     inner = width + pad * 2
@@ -51,13 +71,13 @@ def box(lines, code="96", pad=1):
     return "\n".join(out)
 
 
-def section(title, code="96"):
-    """A coloured section header shown before each problem's output."""
+def section(title, code=""):
+    """A clean section header shown before each problem's output."""
     tail = "━" * max(3, 50 - visible_len(title))
     return "\n" + paint("━━━  " + title + "  " + tail, "1", code)
 
 
-def table(headers, rows, code="96"):
+def table(headers, rows, code=""):
     """Render a bordered table. Cells may already contain colour codes."""
     widths = []
     for i in range(len(headers)):
@@ -83,19 +103,31 @@ def table(headers, rows, code="96"):
 
 
 def banner(subtitle):
-    """The ASCII-art welcome banner (cat mascot + course title)."""
-    cat = [paint(" /\\_/\\ ", "95"),
-           paint("( o.o )", "95"),
-           paint(" > ^ < ", "95")]
-    lines = [
-        cat[0] + "   " + paint("CSC2103", "1", "93") + "  "
-        + paint("Data Structures & Algorithms", "1"),
-        cat[1] + "   " + paint(subtitle, "2"),
-        cat[2] + "   " + paint("Greedy", "92") + paint(" · ", "2")
-        + paint("Dynamic Programming", "96") + paint(" · ", "2")
-        + paint("Heuristic", "93"),
+    """The cute ASCII-art welcome banner (sleepy cat + course title)."""
+    width = 50
+    cat = [
+        r"   |\      _,,,---,,_",
+        r"   /,`.-'`'    -.  ;-;;,_",
+        r"  |,4-  ) )-,_..;\ (  `'-'",
+        r" '---''(_/--'  `-'\_)",
     ]
-    return box(lines, "96")
+    # Indent the whole cat by one amount so the art keeps its shape.
+    indent = " " * max(0, (width - max(len(c) for c in cat)) // 2)
+    lines = [
+        "",
+        indent + cat[0],
+        indent + cat[1],
+        indent + cat[2] + paint("   z z z 💤", "2"),
+        indent + cat[3],
+        "",
+        center(paint("✨ CSC2103 ✨", "1") + "  "
+               + paint("Data Structures & Algorithms", "1"), width),
+        center(paint(subtitle, "2"), width),
+        "",
+        center(paint("🐾  Greedy  ·  Dynamic Programming  ·  Heuristic", "1"), width),
+        "",
+    ]
+    return box(lines)
 
 
 # ---------------------------------------------------------------------
@@ -106,7 +138,7 @@ def read_int(prompt, minimum=None):
     """Read a whole number, re-prompting until valid (>= minimum if given)."""
     while True:
         try:
-            value = int(input(paint(prompt, "96")))
+            value = int(input(prompt))
             if minimum is not None and value < minimum:
                 print(paint(f"  -> Please enter a whole number >= {minimum}.", "91"))
                 continue
@@ -116,8 +148,8 @@ def read_int(prompt, minimum=None):
 
 
 def read_line(prompt):
-    """Read a trimmed line of text with a coloured prompt."""
-    return input(paint(prompt, "96")).strip()
+    """Read a trimmed line of text."""
+    return input(prompt).strip()
 
 
 def ask_run_again():

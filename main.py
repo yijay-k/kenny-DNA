@@ -24,25 +24,25 @@ MENU = {
 
 
 def print_menu():
-    rows = [paint("Main Menu", "1"), ""]
+    rows = [paint("🐾 Main Menu", "1"), ""]
     for key, (label, _) in MENU.items():
-        rows.append(paint(f" {key} ", "1", "93") + "  " + label)
-    rows.append(paint(" 0 ", "1", "91") + "  " + "Exit")
-    print(box(rows, "94"))
+        rows.append(paint(f"[{key}]", "1") + "  " + label)
+    rows.append(paint("[0]", "1") + "  " + "Exit")
+    print(box(rows))
 
 
 def main():
     print(banner("Group Project — three algorithm techniques"))
     while True:
         print_menu()
-        choice = read_line("Select an option ▶ ")
+        choice = read_line("Pick a problem ▶ ")
         if choice == "0":
-            print(paint("Goodbye! 🐱", "95"))
+            print(paint("\n  Bye bye! Thanks for visiting 🐾💤", "1"))
             break
         if choice in MENU:
             MENU[choice][1]()
         else:
-            print(paint("  -> Invalid choice. Please pick 0, 1, 2, or 3.", "91"))
+            print(paint("  -> Oops, please pick 0, 1, 2, or 3. 🐱", "91"))
 
 
 if __name__ == "__main__":

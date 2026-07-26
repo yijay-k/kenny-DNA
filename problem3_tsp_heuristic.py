@@ -147,14 +147,14 @@ def route_names(route):
 
 
 def run():
-    print(section("Problem 3 · Travelling Salesman  (Nearest-Neighbour)"))
+    print(section("🧭 Problem 3 · Travelling Salesman  (Nearest-Neighbour)"))
     while True:
         cities = get_cities()
 
         # (a) Canonical Nearest-Neighbour: single start at the first city.
         nn_route, nn_dist = nearest_neighbour_from(cities, 0)
-        print(paint(f"\n[Nearest Neighbour] start = {cities[0]['name']}", "1", "93"))
-        print("  Route: " + paint(route_names(nn_route), "96"))
+        print(paint(f"\n[Nearest Neighbour] start = {cities[0]['name']}", "1"))
+        print("  Route: " + paint(route_names(nn_route), "1"))
         print("  Leg-by-leg distances:")
         for i in range(len(nn_route) - 1):
             leg = distance(nn_route[i], nn_route[i + 1])
@@ -164,22 +164,22 @@ def run():
         # (b) Improvement: best Nearest-Neighbour over all possible starts.
         best_route, best_dist, best_start = best_nearest_neighbour(cities)
         print(paint(f"\n[Improved NN] best of all {len(cities)} start cities "
-                    f"(start = {cities[best_start]['name']})", "1", "92"))
-        print("  Route: " + paint(route_names(best_route), "96"))
+                    f"(start = {cities[best_start]['name']})", "1"))
+        print("  Route: " + paint(route_names(best_route), "1"))
         print("  Total distance: " + paint(f"{best_dist:.2f}", "1"))
 
         # (c) For small n, show the TRUE optimal so the heuristic gap is clear.
         if len(cities) <= 9:
             opt_route, opt_dist = brute_force_optimal(cities)
-            print(paint("\n[Exact optimal] exhaustive search", "1", "95"))
-            print("  Route: " + paint(route_names(opt_route), "96"))
+            print(paint("\n[Exact optimal] exhaustive search", "1"))
+            print("  Route: " + paint(route_names(opt_route), "1"))
             print("  Total distance: " + paint(f"{opt_dist:.2f}", "1"))
             if opt_dist > 0:
                 nn_gap = (nn_dist - opt_dist) / opt_dist * 100
                 best_gap = (best_dist - opt_dist) / opt_dist * 100
                 print("  Gap vs optimal: "
-                      + paint(f"single-start NN = +{nn_gap:.1f}%", "93")
-                      + ", " + paint(f"improved NN = +{best_gap:.1f}%", "92"))
+                      + paint(f"single-start NN = +{nn_gap:.1f}%", "1")
+                      + ", " + paint(f"improved NN = +{best_gap:.1f}%", "1"))
                 if best_gap <= 0.0001:
                     print(paint("  -> The improved heuristic matched the optimal here; "
                                 "the single-start version shows why NN can fall short.", "2"))
@@ -197,5 +197,5 @@ def run():
 
 
 if __name__ == "__main__":
-    print(box(["Problem 3 · Travelling Salesman (Nearest-Neighbour Heuristic)"], "96"))
+    print(box(["🧭 Problem 3 · Travelling Salesman (Nearest-Neighbour Heuristic)"]))
     run()
