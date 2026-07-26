@@ -1,5 +1,6 @@
 SAMPLE RUN - Problem 2: Coin Change (Dynamic Programming)
-Menu input sequence: 2 -> coins 1,3,4 -> amount 6 -> n -> 0
+Shows: dp table, min coins, and the optimal-substructure recurrence.
+Menu input: 2 -> coins 1,3,4 -> amount 11 -> n -> 0
 ----------------------------------------------------------
 ============================================================
  CSC2103 - Data Structures and Algorithms - Group Project
@@ -23,9 +24,20 @@ amount  dp[a]
 4       1       
 5       2       
 6       2       
+7       2       
+8       2       
+9       3       
+10      3       
+11      3       
 
-Minimum coins needed: 2
-Combination used: 2 x 3
+Minimum coins needed: 3
+Combination used: 2 x 4  +  1 x 3
+
+Optimal substructure (how dp[amount] was built):
+  dp[11] = dp[8] + 1 = 2 + 1 = 3   (use coin 3)
+  dp[8] = dp[4] + 1 = 1 + 1 = 2   (use coin 4)
+  dp[4] = dp[0] + 1 = 0 + 1 = 1   (use coin 4)
+  dp[0] = 0   (base case: no coins needed)
 
 Run again with new input? (y/n): 
 Main Menu

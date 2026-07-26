@@ -1,5 +1,6 @@
 SAMPLE RUN - Problem 1: Activity Selection (Greedy)
-Menu input sequence: 1 -> 6 activities -> n -> 0
+Shows: sort by finish, greedy trace, and validation vs exhaustive search.
+Menu input: 1 -> 6 activities -> n -> 0
 ----------------------------------------------------------
 ============================================================
  CSC2103 - Data Structures and Algorithms - Group Project
@@ -34,7 +35,7 @@ Act   Start   Finish
 6     8       10      
 
 Greedy decisions (in finish-time order):
-  [SELECTED] Activity 1 (1-3): first activity
+  [SELECTED] Activity 1 (1-3): first activity in finish order
   [  skip  ] Activity 2 (2-5): start 2 < last finish 3 (overlaps)
   [SELECTED] Activity 3 (4-7): start 4 >= last finish 3
   [  skip  ] Activity 4 (1-8): start 1 < last finish 7 (overlaps)
@@ -49,6 +50,7 @@ Act   Start   Finish
 6     8       10      
 
 Maximum number of non-overlapping activities: 3
+Validation (exhaustive search): optimal = 3 -> OPTIMAL
 
 Run again with new input? (y/n): 
 Main Menu

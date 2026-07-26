@@ -1,5 +1,6 @@
 SAMPLE RUN - Problem 3: Travelling Salesman (Nearest-Neighbour)
-Menu input sequence: 3 -> 4 cities (square) -> n -> 0
+Shows: single-start NN, improved best-start NN, exact optimal, and the gap.
+Menu input: 3 -> 6 cities -> n -> 0
 ----------------------------------------------------------
 ============================================================
  CSC2103 - Data Structures and Algorithms - Group Project
@@ -12,17 +13,29 @@ Main Menu
   0. Exit
 Select an option: 
 === Problem 3: Travelling Salesman (Nearest-Neighbour Heuristic) ===
-Enter number of cities (>= 3): City 1 name:   A - x coordinate (>= 0):   A - y coordinate (>= 0): City 2 name:   B - x coordinate (>= 0):   B - y coordinate (>= 0): City 3 name:   C - x coordinate (>= 0):   C - y coordinate (>= 0): City 4 name:   D - x coordinate (>= 0):   D - y coordinate (>= 0): 
-Best route found (tried all start cities): A -> B -> C -> D -> A
+Enter number of cities (>= 3): City 1 name:   A - x coordinate (>= 0):   A - y coordinate (>= 0): City 2 name:   B - x coordinate (>= 0):   B - y coordinate (>= 0): City 3 name:   C - x coordinate (>= 0):   C - y coordinate (>= 0): City 4 name:   D - x coordinate (>= 0):   D - y coordinate (>= 0): City 5 name:   E - x coordinate (>= 0):   E - y coordinate (>= 0): City 6 name:   F - x coordinate (>= 0):   F - y coordinate (>= 0): 
+[Nearest Neighbour] start = A
+  Route: A -> C -> E -> D -> B -> F -> A
+  Leg-by-leg distances:
+    A -> C: 2.00
+    C -> E: 2.00
+    E -> D: 5.10
+    D -> B: 2.00
+    B -> F: 4.00
+    F -> A: 7.07
+  Total distance: 22.17
 
-Leg-by-leg distances:
-  A -> B: 10.00
-  B -> C: 10.00
-  C -> D: 10.00
-  D -> A: 10.00
+[Improved NN] best of all 6 start cities (start = B)
+  Route: B -> D -> F -> E -> C -> A -> B
+  Total distance: 18.20
 
-Total distance: 40.00
-Note: Nearest-Neighbour is a heuristic; even with multiple start cities it may not be the globally optimal route.
+[Exact optimal] exhaustive search
+  Route: A -> B -> D -> F -> E -> C -> A
+  Total distance: 18.20
+  Gap vs optimal: single-start NN = +21.8%, improved NN = +0.0%
+  -> The improved heuristic matched the optimal route here; the single-start version shows why NN can fall short.
+
+Note: Nearest-Neighbour is a fast heuristic; it aims for a good route, not a guaranteed shortest one.
 
 Run again with new input? (y/n): 
 Main Menu
