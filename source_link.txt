@@ -1,0 +1,13 @@
+CSC2103 Group Project - Source Code Repository
+===============================================
+
+GitHub repository (accessible to the lecturer):
+https://github.com/yijay-k/kenny-DNA
+
+The repository contains:
+  - csc2103_algorithms.py   : all three problems (Greedy, DP, Heuristic)
+  - samples/                : sample inputs and captured outputs
+  - README.md               : instructions to run the programs
+
+To run:
+  python3 csc2103_algorithms.py

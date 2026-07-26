@@ -1,0 +1,33 @@
+SAMPLE RUN - Problem 3: Travelling Salesman (Nearest-Neighbour)
+Menu input sequence: 3 -> 4 cities (square) -> n -> 0
+----------------------------------------------------------
+============================================================
+ CSC2103 - Data Structures and Algorithms - Group Project
+============================================================
+
+Main Menu
+  1. Activity Selection  (Greedy)
+  2. Coin Change         (Dynamic Programming)
+  3. Travelling Salesman (Nearest-Neighbour Heuristic)
+  0. Exit
+Select an option: 
+=== Problem 3: Travelling Salesman (Nearest-Neighbour Heuristic) ===
+Enter number of cities (>= 3): City 1 name:   A - x coordinate (>= 0):   A - y coordinate (>= 0): City 2 name:   B - x coordinate (>= 0):   B - y coordinate (>= 0): City 3 name:   C - x coordinate (>= 0):   C - y coordinate (>= 0): City 4 name:   D - x coordinate (>= 0):   D - y coordinate (>= 0): 
+Best route found (tried all start cities): A -> B -> C -> D -> A
+
+Leg-by-leg distances:
+  A -> B: 10.00
+  B -> C: 10.00
+  C -> D: 10.00
+  D -> A: 10.00
+
+Total distance: 40.00
+Note: Nearest-Neighbour is a heuristic; even with multiple start cities it may not be the globally optimal route.
+
+Run again with new input? (y/n): 
+Main Menu
+  1. Activity Selection  (Greedy)
+  2. Coin Change         (Dynamic Programming)
+  3. Travelling Salesman (Nearest-Neighbour Heuristic)
+  0. Exit
+Select an option: Goodbye!

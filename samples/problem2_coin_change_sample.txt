@@ -1,0 +1,36 @@
+SAMPLE RUN - Problem 2: Coin Change (Dynamic Programming)
+Menu input sequence: 2 -> coins 1,3,4 -> amount 6 -> n -> 0
+----------------------------------------------------------
+============================================================
+ CSC2103 - Data Structures and Algorithms - Group Project
+============================================================
+
+Main Menu
+  1. Activity Selection  (Greedy)
+  2. Coin Change         (Dynamic Programming)
+  3. Travelling Salesman (Nearest-Neighbour Heuristic)
+  0. Exit
+Select an option: 
+=== Problem 2: Coin Change (Dynamic Programming) ===
+Enter coin denominations (comma-separated, e.g. 1,3,4): Enter target amount: 
+DP table  dp[a] = fewest coins to make amount a:
+amount  dp[a]   
+----------------
+0       0       
+1       1       
+2       2       
+3       1       
+4       1       
+5       2       
+6       2       
+
+Minimum coins needed: 2
+Combination used: 2 x 3
+
+Run again with new input? (y/n): 
+Main Menu
+  1. Activity Selection  (Greedy)
+  2. Coin Change         (Dynamic Programming)
+  3. Travelling Salesman (Nearest-Neighbour Heuristic)
+  0. Exit
+Select an option: Goodbye!

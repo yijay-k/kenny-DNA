@@ -1,0 +1,59 @@
+SAMPLE RUN - Problem 1: Activity Selection (Greedy)
+Menu input sequence: 1 -> 6 activities -> n -> 0
+----------------------------------------------------------
+============================================================
+ CSC2103 - Data Structures and Algorithms - Group Project
+============================================================
+
+Main Menu
+  1. Activity Selection  (Greedy)
+  2. Coin Change         (Dynamic Programming)
+  3. Travelling Salesman (Nearest-Neighbour Heuristic)
+  0. Exit
+Select an option: 
+=== Problem 1: Activity Selection (Greedy Algorithm) ===
+Enter number of activities: Activity 1 - start time: Activity 1 - finish time: Activity 2 - start time: Activity 2 - finish time: Activity 3 - start time: Activity 3 - finish time: Activity 4 - start time: Activity 4 - finish time: Activity 5 - start time: Activity 5 - finish time: Activity 6 - start time: Activity 6 - finish time: 
+All activities entered:
+Act   Start   Finish  
+----------------------
+1     1       3       
+2     2       5       
+3     4       7       
+4     1       8       
+5     5       9       
+6     8       10      
+
+Sorted by finish time (greedy order):
+Act   Start   Finish  
+----------------------
+1     1       3       
+2     2       5       
+3     4       7       
+4     1       8       
+5     5       9       
+6     8       10      
+
+Greedy decisions (in finish-time order):
+  [SELECTED] Activity 1 (1-3): first activity
+  [  skip  ] Activity 2 (2-5): start 2 < last finish 3 (overlaps)
+  [SELECTED] Activity 3 (4-7): start 4 >= last finish 3
+  [  skip  ] Activity 4 (1-8): start 1 < last finish 7 (overlaps)
+  [  skip  ] Activity 5 (5-9): start 5 < last finish 7 (overlaps)
+  [SELECTED] Activity 6 (8-10): start 8 >= last finish 7
+
+Final selected activities:
+Act   Start   Finish  
+----------------------
+1     1       3       
+3     4       7       
+6     8       10      
+
+Maximum number of non-overlapping activities: 3
+
+Run again with new input? (y/n): 
+Main Menu
+  1. Activity Selection  (Greedy)
+  2. Coin Change         (Dynamic Programming)
+  3. Travelling Salesman (Nearest-Neighbour Heuristic)
+  0. Exit
+Select an option: Goodbye!
