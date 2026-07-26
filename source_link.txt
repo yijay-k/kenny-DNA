@@ -5,9 +5,16 @@ GitHub repository (accessible to the lecturer):
 https://github.com/yijay-k/kenny-DNA
 
 The repository contains:
-  - csc2103_algorithms.py   : all three problems (Greedy, DP, Heuristic)
-  - samples/                : sample inputs and captured outputs
-  - README.md               : instructions to run the programs
+  - problem1_activity_selection.py : Greedy
+  - problem2_coin_change.py        : Dynamic Programming
+  - problem3_tsp_heuristic.py      : Heuristic
+  - main.py                        : optional menu launcher for all three
+  - ui.py                          : shared terminal UI + input helpers
+  - samples/                       : sample inputs and captured outputs
+  - README.md                      : instructions to run the programs
 
-To run:
-  python3 csc2103_algorithms.py
+To run (any one problem, or the menu):
+  python3 problem1_activity_selection.py
+  python3 problem2_coin_change.py
+  python3 problem3_tsp_heuristic.py
+  python3 main.py

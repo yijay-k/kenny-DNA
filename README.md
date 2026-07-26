@@ -2,69 +2,74 @@
 
 Console programs for three algorithm categories required by the assignment:
 
-| # | Category | Problem | Technique |
-|---|----------|---------|-----------|
-| 1 | Greedy | Activity Selection | Sort by finish time + greedy pick |
-| 2 | Dynamic Programming | Coin Change (min coins) | Bottom-up `dp[]` table |
-| 3 | Heuristic | Travelling Salesman | Multi-start Nearest-Neighbour |
+| # | Category | Problem | Technique | File |
+|---|----------|---------|-----------|------|
+| 1 | Greedy | Activity Selection | Sort by finish time + greedy pick | `problem1_activity_selection.py` |
+| 2 | Dynamic Programming | Coin Change (min coins) | Bottom-up `dp[]` table | `problem2_coin_change.py` |
+| 3 | Heuristic | Travelling Salesman | Multi-start Nearest-Neighbour | `problem3_tsp_heuristic.py` |
 
-All three are in one menu-driven file: **`csc2103_algorithms.py`**.
+Each problem is its **own file** (meaningful names, as the assignment asks) and
+runs independently. `main.py` is an optional menu that launches all three.
 
 ## How to run
 
-Requires **Python 3** (no external libraries).
+Requires **Python 3** only — no external libraries.
 
 ```bash
-python3 csc2103_algorithms.py
+python3 problem1_activity_selection.py     # Greedy
+python3 problem2_coin_change.py            # Dynamic Programming
+python3 problem3_tsp_heuristic.py          # Heuristic
+python3 main.py                            # menu for all three
 ```
 
-Pick `1`, `2`, or `3` from the menu, follow the prompts, and enter `0` to exit.
+The interface uses colour and boxes on a real terminal; colours turn off
+automatically when output is piped (so the files in `samples/` stay plain).
 
 ## Design idea: each program *demonstrates and validates* its technique
 
 Every program (1) solves the problem manually, (2) shows **how** the algorithm
-reached the answer, and (3) **validates** the result on small inputs. This is
-what makes it a clear representation of the technique, not just an answer.
+reached the answer, and (3) **validates** the result on small inputs — so it
+represents the technique, not just prints an answer.
 
-**Problem 1 – Activity Selection (Greedy).** Enter activities as start/finish
-times. It sorts them by finish time (manual insertion sort), shows the greedy
-decision at **each stage** (selected / skipped and why), and gives the maximum
-set of non-overlapping activities. For small inputs it then **confirms the
-greedy answer is optimal** against an exhaustive subset search.
+**Problem 1 – Activity Selection (Greedy).** Sorts by finish time (manual
+insertion sort), shows the greedy decision at **each stage** (selected/skipped
+and why), then for small inputs **confirms the greedy answer is optimal**
+against an exhaustive subset search.
 
-**Problem 2 – Coin Change (Dynamic Programming).** Enter coin denominations and
-a target amount. It builds the `dp[]` table bottom-up (each amount reuses
-smaller solved sub-amounts — overlapping subproblems), prints the table, and
-then prints the **recurrence chain** (`dp[11] = dp[8] + 1 …`) so optimal
-substructure is visible, not just claimed.
+**Problem 2 – Coin Change (Dynamic Programming).** Builds the `dp[]` table
+bottom-up (each amount reuses smaller solved sub-amounts — overlapping
+subproblems), prints the table, and prints the **recurrence chain**
+(`dp[11] = dp[8] + 1 …`) so optimal substructure is visible, not just claimed.
 
-**Problem 3 – Travelling Salesman (Heuristic).** Enter city coordinates. It
-shows (a) the canonical **single-start** Nearest-Neighbour tour with a per-leg
-breakdown, (b) an **improved** version that keeps the best tour over all start
-cities, and (c) for small inputs the **exact optimal** route, reporting how far
-each heuristic falls short. This makes the point directly: NN is fast but not
-guaranteed optimal.
+**Problem 3 – Travelling Salesman (Heuristic).** Shows (a) the canonical
+**single-start** Nearest-Neighbour tour with a per-leg breakdown, (b) an
+**improved** version that keeps the best tour over all start cities, and
+(c) for small inputs the **exact optimal** route, reporting how far each
+heuristic falls short — making it clear NN is fast but not guaranteed optimal.
 
 ## Constraints honoured
 
 - **No built-in algorithmic shortcuts** for the core logic: manual insertion
-  sort (P1), manual DP table (P2), manual nearest-city search (P3). No
-  `sorted()`, `min()`, `itertools`, or graph/optimization libraries. The
-  small-input validators (exhaustive subset / permutation search) are written
-  manually too and are only checks, not the submitted solution.
+  sort (P1), manual DP table (P2), manual nearest-city search and permutation
+  generation (P3). No `sorted()`, `min()`, `itertools`, or graph/optimization
+  libraries. The small-input validators are checks, not the submitted solution.
 - Only `math.sqrt` and standard I/O are used (allowed for formatting/distance).
 - Input is validated at every prompt; data is treated immutably where practical.
 
 ## Repository layout
 
 ```
-csc2103_algorithms.py   # all three problems (menu-driven)
-samples/                # sample inputs + captured outputs for each problem
-source_link.txt         # link to this repository
-README.md               # this file
+problem1_activity_selection.py   # Greedy
+problem2_coin_change.py          # Dynamic Programming
+problem3_tsp_heuristic.py        # Heuristic
+main.py                          # optional menu launcher
+ui.py                            # shared terminal UI + input helpers (DRY)
+samples/                         # sample inputs + captured outputs
+source_link.txt                  # link to this repository
+README.md                        # this file
 ```
 
 ## Sample runs
 
-See the `samples/` folder — each file records the exact menu input sequence and
-the resulting program output for one problem.
+See the `samples/` folder — each file records the input sequence and the
+resulting program output for one problem.
