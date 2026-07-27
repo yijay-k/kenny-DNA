@@ -1,6 +1,7 @@
 SAMPLE RUN - Problem 3: Shortest Path / A* (Heuristic)
-Run: python3 problem3_astar_shortest_path.py   (fixed map; start = Sunway University)
-----------------------------------------------------------
+Command : python3 problem3_astar_shortest_path.py
+Input   : menu choice [1]  ->  start = Sunway University   (map is fixed)
+======================================================================
 ╭───────────────────────────────────────────────────╮
 │ 🧭 Problem 3 · Shortest Path on a Map (A* Search) │
 ╰───────────────────────────────────────────────────╯

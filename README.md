@@ -1,8 +1,12 @@
 # CSC2103 – Data Structures and Algorithms (Group Project)
 
 Three console programs, one per required algorithm category. The programs use
-**fixed datasets and menu/choice-based input** (no free-text data entry), so the
-focus is on demonstrating each algorithm clearly and they are easy to test.
+**fixed datasets and menu/choice-based input** (no free-text data entry) — the
+user only ever picks from a list, so there is nothing invalid to type and the
+focus stays on demonstrating each algorithm clearly.
+
+- **Problem 1** takes no input (runs on a fixed list).
+- **Problem 2** and **Problem 3** take a single menu choice each.
 
 | # | Category | Problem | Technique | File |
 |---|----------|---------|-----------|------|
@@ -34,10 +38,11 @@ time, shows the greedy decision for each activity (selected / skipped and why),
 and reports the maximum set of non-overlapping activities. No user input.
 
 **Problem 2 – Coin Change (Dynamic Programming).** **Fixed** denominations
-`1, 5, 10, 20, 50` cents. The user only enters the target amount. The program
-builds the `dp[]` table bottom-up, prints it, gives the minimum number of coins
-and the coins used, and shows the recurrence chain (`dp[87] = dp[37] + 1 …`) as
-the visible proof of optimal substructure.
+`1, 5, 10, 20, 50` cents. The user picks a target amount **from a menu** (no
+typing, so nothing to validate). The program builds the `dp[]` table bottom-up,
+prints it, gives the minimum number of coins and the coins used, and shows the
+recurrence chain (`dp[37] = dp[17] + 1 …`) as the visible proof of optimal
+substructure.
 
 **Problem 3 – Shortest Path / A\* (Heuristic).** A **fixed map** of real
 locations around Sunway (Sunway University, Sunway Square, Taylor's University,

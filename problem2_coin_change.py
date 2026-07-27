@@ -17,10 +17,14 @@ All core logic (the DP table + reconstruction) is written manually.
 Run directly:  python3 problem2_coin_change.py
 """
 
-from ui import paint, box, section, table, read_int
+from ui import paint, box, section, table, choose
 
 # Fixed denominations (cents). Kept in descending order for a tidy summary.
 COINS = [50, 20, 10, 5, 1]
+
+# Fixed set of amounts the user can choose from (cents). Using a menu instead
+# of typed input means there is no invalid data to guard against.
+AMOUNTS = [8, 18, 27, 37, 63, 88]
 
 
 def coin_change_dp(coins, amount):
@@ -69,7 +73,9 @@ def run():
     print("Fixed coin denominations (cents): "
           + paint(", ".join(f"{c}c" for c in COINS), "1"))
 
-    amount = read_int("\nEnter the amount to make (in cents): ", minimum=0)
+    print()
+    amount = AMOUNTS[choose("Choose an amount to make:",
+                            [f"{a}c" for a in AMOUNTS])]
 
     min_coins, combination, dp, choice = coin_change_dp(COINS, amount)
 

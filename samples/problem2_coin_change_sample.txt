@@ -1,6 +1,7 @@
 SAMPLE RUN - Problem 2: Coin Change (Dynamic Programming)
-Run: python3 problem2_coin_change.py   (fixed coins; input amount = 87)
-----------------------------------------------------------
+Command : python3 problem2_coin_change.py
+Input   : menu choice [4]  ->  amount = 37c   (coins are fixed)
+======================================================================
 ╭──────────────────────────────────────────────────╮
 │ 🪙 Problem 2 · Coin Change (Dynamic Programming) │
 ╰──────────────────────────────────────────────────╯
@@ -8,12 +9,21 @@ Run: python3 problem2_coin_change.py   (fixed coins; input amount = 87)
 ━━━  🪙 Problem 2 · Coin Change  (Dynamic Programming)  ━━━
 Fixed coin denominations (cents): 50c, 20c, 10c, 5c, 1c
 
-Enter the amount to make (in cents): 
-Minimum coins to make 87c: 6
-Coins used: 1 x 50c  +  1 x 20c  +  1 x 10c  +  1 x 5c  +  2 x 1c
+╭───────────────────────────╮
+│ Choose an amount to make: │
+│                           │
+│ [1]  8c                   │
+│ [2]  18c                  │
+│ [3]  27c                  │
+│ [4]  37c                  │
+│ [5]  63c                  │
+│ [6]  88c                  │
+╰───────────────────────────╯
+Your choice ▶ 
+Minimum coins to make 37c: 5
+Coins used: 1 x 20c  +  1 x 10c  +  1 x 5c  +  2 x 1c
 
 How dp[amount] was built (optimal substructure):
-  dp[87] = dp[37] + 1 = 5 + 1 = 6   (use 50c)
   dp[37] = dp[17] + 1 = 4 + 1 = 5   (use 20c)
   dp[17] = dp[7] + 1 = 3 + 1 = 4   (use 10c)
   dp[7] = dp[2] + 1 = 2 + 1 = 3   (use 5c)

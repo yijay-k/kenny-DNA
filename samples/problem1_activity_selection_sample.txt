@@ -1,6 +1,7 @@
 SAMPLE RUN - Problem 1: Activity Selection (Greedy)
-Run: python3 problem1_activity_selection.py   (fixed data, no input)
-----------------------------------------------------------
+Command : python3 problem1_activity_selection.py
+Input   : none (fixed list of activities)
+======================================================================
 ╭────────────────────────────────────────────╮
 │ 🎯 Problem 1 · Activity Selection (Greedy) │
 ╰────────────────────────────────────────────╯
