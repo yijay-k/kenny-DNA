@@ -1,50 +1,53 @@
 """
 Problem 1: Activity Selection  (GREEDY ALGORITHM)
 =================================================
-Goal   : From a set of activities (each with a start and finish time),
-         select the maximum number that do NOT overlap, using a single
-         resource.
-Greedy : Sort by earliest finish time, then repeatedly take the next
-         activity whose start >= the finish of the last one chosen.
-Why the greedy choice is correct: the activity that finishes earliest frees
-         the resource as soon as possible, leaving the most time for the
-         remaining activities (greedy-choice property + optimal
-         substructure). This is provably optimal - brute_force_max()
-         confirms it for small inputs.
+Goal   : From a FIXED list of activities (each with a name, a start
+         date-time and an end date-time), select the maximum number that
+         do NOT overlap, so a single hall/resource is used for as many
+         activities as possible.
+Greedy : Sort by earliest END time, then repeatedly take the next activity
+         whose start is not before the end of the last one chosen.
+Why the greedy choice is correct: finishing earliest frees the hall as soon
+         as possible, leaving the most room for the remaining activities.
 
+The data set is predefined (no free-text input) so the program stays simple
+and easy to test - we just run the algorithm and show how it decides.
+All core logic (insertion sort + selection) is written manually.
 Run directly:  python3 problem1_activity_selection.py
-All core logic (insertion sort, selection, validation) is written manually.
 """
 
-from ui import paint, box, section, table, read_int, ask_run_again
+from datetime import datetime
+
+from ui import paint, box, section, table
+
+# Fixed schedule: hall bookings for one day (name, start, end).
+# Each activity carries a full date AND time.
+ACTIVITIES = [
+    {"name": "Algorithms Lecture", "start": datetime(2026, 8, 10, 9, 0),  "end": datetime(2026, 8, 10, 10, 30)},
+    {"name": "Robotics Club",      "start": datetime(2026, 8, 10, 10, 0), "end": datetime(2026, 8, 10, 11, 0)},
+    {"name": "Data Science Talk",  "start": datetime(2026, 8, 10, 10, 30),"end": datetime(2026, 8, 10, 12, 0)},
+    {"name": "Career Workshop",    "start": datetime(2026, 8, 10, 11, 30),"end": datetime(2026, 8, 10, 13, 0)},
+    {"name": "Chess Tournament",   "start": datetime(2026, 8, 10, 12, 0), "end": datetime(2026, 8, 10, 13, 30)},
+    {"name": "AI Seminar",         "start": datetime(2026, 8, 10, 13, 0), "end": datetime(2026, 8, 10, 14, 30)},
+    {"name": "Study Group",        "start": datetime(2026, 8, 10, 14, 30),"end": datetime(2026, 8, 10, 15, 30)},
+]
 
 
-def get_activities():
-    """Prompt for all activities with validation. Returns a list of dicts."""
-    n = read_int("Enter number of activities: ", minimum=1)
-    activities = []
-    for i in range(n):
-        while True:
-            start = read_int(f"Activity {i + 1} - start time: ", minimum=0)
-            finish = read_int(f"Activity {i + 1} - finish time: ", minimum=0)
-            if finish <= start:
-                print(paint("  -> Finish time must be greater than start time.", "91"))
-                continue
-            activities.append({"id": i + 1, "start": start, "finish": finish})
-            break
-    return activities
+def fmt(dt):
+    """Format a date-time for display, e.g. 'Mon 10 Aug 09:00'."""
+    return dt.strftime("%a %d %b %H:%M")
 
 
-def insertion_sort_by_finish(activities):
+def insertion_sort_by_end(activities):
     """
-    Manually sort activities by finish time (ascending) using insertion
-    sort. Returns a NEW list (the input is not mutated).
+    Manually sort activities by end time (ascending) with insertion sort.
+    Returns a NEW list (the input is not mutated).
     """
-    ordered = list(activities)  # shallow copy so we never mutate the caller
+    ordered = list(activities)
     for i in range(1, len(ordered)):
         key = ordered[i]
         j = i - 1
-        while j >= 0 and ordered[j]["finish"] > key["finish"]:
+        while j >= 0 and ordered[j]["end"] > key["end"]:
             ordered[j + 1] = ordered[j]
             j -= 1
         ordered[j + 1] = key
@@ -53,100 +56,58 @@ def insertion_sort_by_finish(activities):
 
 def select_activities(sorted_activities):
     """
-    Greedily pick the maximum set of non-overlapping activities and build a
-    trace of every greedy decision so the reasoning is visible.
-
+    Greedily pick the maximum set of non-overlapping activities and record a
+    trace of every decision so the greedy reasoning is visible.
     Returns: (selected_list, trace_list)
-      trace item = {"activity": <dict>, "chosen": bool, "reason": str}
     """
     selected = []
     trace = []
-    last_finish = None  # finish time of the most recently chosen activity
+    last_end = None  # end time of the most recently chosen activity
 
     for activity in sorted_activities:
-        if last_finish is None or activity["start"] >= last_finish:
+        if last_end is None or activity["start"] >= last_end:
             selected.append(activity)
-            reason = "first activity in finish order" if last_finish is None \
-                else f"start {activity['start']} >= last finish {last_finish}"
+            reason = "first (earliest end)" if last_end is None \
+                else f"starts {fmt(activity['start'])} >= last end {fmt(last_end)}"
             trace.append({"activity": activity, "chosen": True, "reason": reason})
-            last_finish = activity["finish"]
+            last_end = activity["end"]
         else:
-            reason = f"start {activity['start']} < last finish {last_finish} (overlaps)"
+            reason = f"starts {fmt(activity['start'])} < last end {fmt(last_end)} (overlaps)"
             trace.append({"activity": activity, "chosen": False, "reason": reason})
-
     return selected, trace
 
 
-def brute_force_max(activities):
-    """
-    VALIDATION helper (small inputs only): the size of the largest set of
-    non-overlapping activities, found by checking every subset. Confirms the
-    greedy answer is optimal. Written manually (no libraries).
-    """
-    n = len(activities)
-    best = 0
-    for mask in range(1 << n):                 # every subset as a bit-mask
-        chosen = [activities[i] for i in range(n) if mask & (1 << i)]
-        compatible = True
-        for i in range(len(chosen)):
-            for j in range(i + 1, len(chosen)):
-                a, b = chosen[i], chosen[j]
-                # Two intervals overlap iff each starts before the other ends.
-                # Touching endpoints (a.start == b.finish) do NOT overlap.
-                if a["start"] < b["finish"] and b["start"] < a["finish"]:
-                    compatible = False
-                    break
-            if not compatible:
-                break
-        if compatible and len(chosen) > best:
-            best = len(chosen)
-    return best
-
-
 def print_activity_table(title, activities):
-    """Display a list of activities as a bordered table."""
+    """Display activities as a bordered table (name, start, end)."""
     print(paint("\n" + title, "1"))
     if not activities:
         print(paint("  (none)", "2"))
         return
-    rows = [[str(a["id"]), str(a["start"]), str(a["finish"])] for a in activities]
-    print(table(["Act", "Start", "Finish"], rows))
+    rows = [[a["name"], fmt(a["start"]), fmt(a["end"])] for a in activities]
+    print(table(["Activity", "Start", "End"], rows))
 
 
 def run():
     print(section("🎯 Problem 1 · Activity Selection  (Greedy)"))
-    while True:
-        activities = get_activities()
-        print_activity_table("All activities entered:", activities)
 
-        ordered = insertion_sort_by_finish(activities)
-        print_activity_table("Sorted by finish time (greedy order):", ordered)
+    print_activity_table("Fixed list of activities:", ACTIVITIES)
 
-        selected, trace = select_activities(ordered)
+    ordered = insertion_sort_by_end(ACTIVITIES)
+    print_activity_table("Step 1 - sorted by earliest end time:", ordered)
 
-        print(paint("\nGreedy decisions (in finish-time order):", "1"))
-        for step in trace:
-            act = step["activity"]
-            mark = paint("● SELECTED", "1") if step["chosen"] else paint("○ skip    ", "2")
-            print(f"  {mark}  Activity {act['id']} ({act['start']}-{act['finish']}): {step['reason']}")
+    selected, trace = select_activities(ordered)
 
-        print_activity_table("Final selected activities:", selected)
-        print("\nMaximum non-overlapping activities: "
-              + paint(str(len(selected)), "1"))
+    print(paint("\nStep 2 - greedy decisions (in end-time order):", "1"))
+    for step in trace:
+        act = step["activity"]
+        mark = paint("● SELECTED", "1") if step["chosen"] else paint("○ skip    ", "2")
+        print(f"  {mark}  {act['name']:<20} {step['reason']}")
 
-        # Validate: for small inputs, confirm greedy == exhaustive optimum.
-        if len(activities) <= 12:
-            optimum = brute_force_max(activities)
-            ok = optimum == len(selected)
-            verdict = paint("OPTIMAL", "1") if ok else paint("MISMATCH!", "1", "91")
-            print(f"Validation (exhaustive search): optimal = {optimum} -> {verdict}")
-        else:
-            print(paint("Validation skipped (too many activities for exhaustive check).", "2"))
-
-        if not ask_run_again():
-            break
+    print_activity_table("Result - maximum non-overlapping activities:", selected)
+    print("\nActivities selected: " + paint(str(len(selected)), "1")
+          + f" out of {len(ACTIVITIES)}")
 
 
 if __name__ == "__main__":
-    print(box(["🎯 Problem 1 · Activity Selection (Greedy)"], "95"))
+    print(box(["🎯 Problem 1 · Activity Selection (Greedy)"]))
     run()

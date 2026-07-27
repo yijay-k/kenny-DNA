@@ -1,15 +1,16 @@
 # CSC2103 – Data Structures and Algorithms (Group Project)
 
-Console programs for three algorithm categories required by the assignment:
+Three console programs, one per required algorithm category. The programs use
+**fixed datasets and menu/choice-based input** (no free-text data entry), so the
+focus is on demonstrating each algorithm clearly and they are easy to test.
 
 | # | Category | Problem | Technique | File |
 |---|----------|---------|-----------|------|
-| 1 | Greedy | Activity Selection | Sort by finish time + greedy pick | `problem1_activity_selection.py` |
+| 1 | Greedy | Activity Selection | Sort by end time + greedy pick | `problem1_activity_selection.py` |
 | 2 | Dynamic Programming | Coin Change (min coins) | Bottom-up `dp[]` table | `problem2_coin_change.py` |
-| 3 | Heuristic | Travelling Salesman | Multi-start Nearest-Neighbour | `problem3_tsp_heuristic.py` |
+| 3 | Heuristic | Shortest Path on a map | A* Search | `problem3_astar_shortest_path.py` |
 
-Each problem is its **own file** (meaningful names, as the assignment asks) and
-runs independently. `main.py` is an optional menu that launches all three.
+`main.py` is a menu that launches all three; each problem also runs on its own.
 
 ## How to run
 
@@ -18,58 +19,54 @@ Requires **Python 3** only — no external libraries.
 ```bash
 python3 problem1_activity_selection.py     # Greedy
 python3 problem2_coin_change.py            # Dynamic Programming
-python3 problem3_tsp_heuristic.py          # Heuristic
+python3 problem3_astar_shortest_path.py    # Heuristic (A*)
 python3 main.py                            # menu for all three
 ```
 
-The interface uses colour and boxes on a real terminal; colours turn off
+The interface uses light colour and boxes on a real terminal; colours turn off
 automatically when output is piped (so the files in `samples/` stay plain).
 
-## Design idea: each program *demonstrates and validates* its technique
+## What each program does
 
-Every program (1) solves the problem manually, (2) shows **how** the algorithm
-reached the answer, and (3) **validates** the result on small inputs — so it
-represents the technique, not just prints an answer.
+**Problem 1 – Activity Selection (Greedy).** A **fixed list** of hall bookings
+(activity name + start/end **date-time**). The program sorts by earliest end
+time, shows the greedy decision for each activity (selected / skipped and why),
+and reports the maximum set of non-overlapping activities. No user input.
 
-**Problem 1 – Activity Selection (Greedy).** Sorts by finish time (manual
-insertion sort), shows the greedy decision at **each stage** (selected/skipped
-and why), then for small inputs **confirms the greedy answer is optimal**
-against an exhaustive subset search.
+**Problem 2 – Coin Change (Dynamic Programming).** **Fixed** denominations
+`1, 5, 10, 20, 50` cents. The user only enters the target amount. The program
+builds the `dp[]` table bottom-up, prints it, gives the minimum number of coins
+and the coins used, and shows the recurrence chain (`dp[87] = dp[37] + 1 …`) as
+the visible proof of optimal substructure.
 
-**Problem 2 – Coin Change (Dynamic Programming).** Builds the `dp[]` table
-bottom-up (each amount reuses smaller solved sub-amounts — overlapping
-subproblems), prints the table, and prints the **recurrence chain**
-(`dp[11] = dp[8] + 1 …`) so optimal substructure is visible, not just claimed.
+**Problem 3 – Shortest Path / A\* (Heuristic).** A **fixed map** of real
+locations around Sunway (Sunway University, Sunway Square, Taylor's University,
+Monash University, ISKL) with approximate road distances. The user only picks a
+**starting location**; A* then finds the shortest route and distance to each
+other location, guided by a straight-line-distance heuristic.
 
-**Problem 3 – Travelling Salesman (Heuristic).** Shows (a) the canonical
-**single-start** Nearest-Neighbour tour with a per-leg breakdown, (b) an
-**improved** version that keeps the best tour over all start cities, and
-(c) for small inputs the **exact optimal** route, reporting how far each
-heuristic falls short — making it clear NN is fast but not guaranteed optimal.
+> Distances in Problem 3 are approximate (km). Replace them with exact Google
+> Maps values if precise figures are needed — only the numbers in `ROADS` and
+> the positions in `LOCATIONS` need editing.
 
 ## Constraints honoured
 
 - **No built-in algorithmic shortcuts** for the core logic: manual insertion
-  sort (P1), manual DP table (P2), manual nearest-city search and permutation
-  generation (P3). No `sorted()`, `min()`, `itertools`, or graph/optimization
-  libraries. The small-input validators are checks, not the submitted solution.
-- Only `math.sqrt` and standard I/O are used (allowed for formatting/distance).
-- Input is validated at every prompt; data is treated immutably where practical.
+  sort (P1), manual DP table (P2), manual A* search (P3). No `sorted()`,
+  `min()`, or graph/optimization libraries for the algorithms.
+- Only `math`, `datetime`, and standard I/O are used (formatting / dates /
+  distance) — allowed for I/O and general utilities.
+- Because input is menu/choice-based, validation is a simple range check.
 
 ## Repository layout
 
 ```
-problem1_activity_selection.py   # Greedy
-problem2_coin_change.py          # Dynamic Programming
-problem3_tsp_heuristic.py        # Heuristic
-main.py                          # optional menu launcher
-ui.py                            # shared terminal UI + input helpers (DRY)
-samples/                         # sample inputs + captured outputs
-source_link.txt                  # link to this repository
-README.md                        # this file
+problem1_activity_selection.py    # Greedy
+problem2_coin_change.py           # Dynamic Programming
+problem3_astar_shortest_path.py   # Heuristic (A*)
+main.py                           # optional menu launcher
+ui.py                             # shared terminal UI + input helpers
+samples/                          # sample outputs for each problem
+source_link.txt                   # link to this repository
+README.md                         # this file
 ```
-
-## Sample runs
-
-See the `samples/` folder — each file records the input sequence and the
-resulting program output for one problem.

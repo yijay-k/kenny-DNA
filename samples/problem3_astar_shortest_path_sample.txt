@@ -1,0 +1,46 @@
+SAMPLE RUN - Problem 3: Shortest Path / A* (Heuristic)
+Run: python3 problem3_astar_shortest_path.py   (fixed map; start = Sunway University)
+----------------------------------------------------------
+╭───────────────────────────────────────────────────╮
+│ 🧭 Problem 3 · Shortest Path on a Map (A* Search) │
+╰───────────────────────────────────────────────────╯
+
+━━━  🧭 Problem 3 · Shortest Path on a Map  (A* Search)  ━━━
+
+Fixed map - road links (approx. km):
+  Sunway University  <->  Sunway Square  :  1.1 km
+  Sunway University  <->  Taylor's University  :  0.8 km
+  Sunway University  <->  Monash University  :  0.7 km
+  Sunway Square  <->  Taylor's University  :  1.2 km
+  Sunway Square  <->  ISKL (Ampang)  :  25.0 km
+  Taylor's University  <->  Monash University  :  0.9 km
+
+╭────────────────────────────────╮
+│ Choose your STARTING location: │
+│                                │
+│ [1]  Sunway University         │
+│ [2]  Sunway Square             │
+│ [3]  Taylor's University       │
+│ [4]  Monash University         │
+│ [5]  ISKL (Ampang)             │
+╰────────────────────────────────╯
+Your choice ▶ 
+Shortest paths from Sunway University (A* search):
+
+  To Sunway Square:
+    Route   : Sunway University  ->  Sunway Square
+    Distance: 1.1 km
+
+  To Taylor's University:
+    Route   : Sunway University  ->  Taylor's University
+    Distance: 0.8 km
+
+  To Monash University:
+    Route   : Sunway University  ->  Monash University
+    Distance: 0.7 km
+
+  To ISKL (Ampang):
+    Route   : Sunway University  ->  Sunway Square  ->  ISKL (Ampang)
+    Distance: 26.1 km
+
+A* uses the straight-line distance to the goal as its heuristic; because that never over-estimates the real distance, the routes above are the true shortest paths.

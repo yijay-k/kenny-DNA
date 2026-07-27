@@ -152,6 +152,22 @@ def read_line(prompt):
     return input(prompt).strip()
 
 
+def choose(title, options):
+    """
+    Show a numbered menu and return the chosen index (0-based). Because the
+    user only ever picks from a fixed list, validation is a simple range
+    check - no free-text data to sanitise.
+    """
+    rows = [paint(title, "1"), ""]
+    rows += [paint(f"[{i + 1}]", "1") + "  " + opt for i, opt in enumerate(options)]
+    print(box(rows))
+    while True:
+        raw = read_line("Your choice ▶ ")
+        if raw.isdigit() and 1 <= int(raw) <= len(options):
+            return int(raw) - 1
+        print(paint(f"  -> Please enter a number from 1 to {len(options)}.", "91"))
+
+
 def ask_run_again():
     """Return True if the user wants to run the current problem again."""
-    return read_line("\nRun again with new input? (y/n): ").lower() == "y"
+    return read_line("\nRun again? (y/n): ").lower() == "y"

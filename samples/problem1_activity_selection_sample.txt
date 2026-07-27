@@ -1,55 +1,55 @@
 SAMPLE RUN - Problem 1: Activity Selection (Greedy)
-Run: python3 problem1_activity_selection.py
-Input: 6 activities -> n
+Run: python3 problem1_activity_selection.py   (fixed data, no input)
 ----------------------------------------------------------
 ╭────────────────────────────────────────────╮
 │ 🎯 Problem 1 · Activity Selection (Greedy) │
 ╰────────────────────────────────────────────╯
 
 ━━━  🎯 Problem 1 · Activity Selection  (Greedy)  ━━━━━━━
-Enter number of activities: Activity 1 - start time: Activity 1 - finish time: Activity 2 - start time: Activity 2 - finish time: Activity 3 - start time: Activity 3 - finish time: Activity 4 - start time: Activity 4 - finish time: Activity 5 - start time: Activity 5 - finish time: Activity 6 - start time: Activity 6 - finish time: 
-All activities entered:
-╭─────┬───────┬────────╮
-│ Act │ Start │ Finish │
-├─────┼───────┼────────┤
-│ 1   │ 1     │ 3      │
-│ 2   │ 2     │ 5      │
-│ 3   │ 4     │ 7      │
-│ 4   │ 1     │ 8      │
-│ 5   │ 5     │ 9      │
-│ 6   │ 8     │ 10     │
-╰─────┴───────┴────────╯
 
-Sorted by finish time (greedy order):
-╭─────┬───────┬────────╮
-│ Act │ Start │ Finish │
-├─────┼───────┼────────┤
-│ 1   │ 1     │ 3      │
-│ 2   │ 2     │ 5      │
-│ 3   │ 4     │ 7      │
-│ 4   │ 1     │ 8      │
-│ 5   │ 5     │ 9      │
-│ 6   │ 8     │ 10     │
-╰─────┴───────┴────────╯
+Fixed list of activities:
+╭────────────────────┬──────────────────┬──────────────────╮
+│ Activity           │ Start            │ End              │
+├────────────────────┼──────────────────┼──────────────────┤
+│ Algorithms Lecture │ Mon 10 Aug 09:00 │ Mon 10 Aug 10:30 │
+│ Robotics Club      │ Mon 10 Aug 10:00 │ Mon 10 Aug 11:00 │
+│ Data Science Talk  │ Mon 10 Aug 10:30 │ Mon 10 Aug 12:00 │
+│ Career Workshop    │ Mon 10 Aug 11:30 │ Mon 10 Aug 13:00 │
+│ Chess Tournament   │ Mon 10 Aug 12:00 │ Mon 10 Aug 13:30 │
+│ AI Seminar         │ Mon 10 Aug 13:00 │ Mon 10 Aug 14:30 │
+│ Study Group        │ Mon 10 Aug 14:30 │ Mon 10 Aug 15:30 │
+╰────────────────────┴──────────────────┴──────────────────╯
 
-Greedy decisions (in finish-time order):
-  ● SELECTED  Activity 1 (1-3): first activity in finish order
-  ○ skip      Activity 2 (2-5): start 2 < last finish 3 (overlaps)
-  ● SELECTED  Activity 3 (4-7): start 4 >= last finish 3
-  ○ skip      Activity 4 (1-8): start 1 < last finish 7 (overlaps)
-  ○ skip      Activity 5 (5-9): start 5 < last finish 7 (overlaps)
-  ● SELECTED  Activity 6 (8-10): start 8 >= last finish 7
+Step 1 - sorted by earliest end time:
+╭────────────────────┬──────────────────┬──────────────────╮
+│ Activity           │ Start            │ End              │
+├────────────────────┼──────────────────┼──────────────────┤
+│ Algorithms Lecture │ Mon 10 Aug 09:00 │ Mon 10 Aug 10:30 │
+│ Robotics Club      │ Mon 10 Aug 10:00 │ Mon 10 Aug 11:00 │
+│ Data Science Talk  │ Mon 10 Aug 10:30 │ Mon 10 Aug 12:00 │
+│ Career Workshop    │ Mon 10 Aug 11:30 │ Mon 10 Aug 13:00 │
+│ Chess Tournament   │ Mon 10 Aug 12:00 │ Mon 10 Aug 13:30 │
+│ AI Seminar         │ Mon 10 Aug 13:00 │ Mon 10 Aug 14:30 │
+│ Study Group        │ Mon 10 Aug 14:30 │ Mon 10 Aug 15:30 │
+╰────────────────────┴──────────────────┴──────────────────╯
 
-Final selected activities:
-╭─────┬───────┬────────╮
-│ Act │ Start │ Finish │
-├─────┼───────┼────────┤
-│ 1   │ 1     │ 3      │
-│ 3   │ 4     │ 7      │
-│ 6   │ 8     │ 10     │
-╰─────┴───────┴────────╯
+Step 2 - greedy decisions (in end-time order):
+  ● SELECTED  Algorithms Lecture   first (earliest end)
+  ○ skip      Robotics Club        starts Mon 10 Aug 10:00 < last end Mon 10 Aug 10:30 (overlaps)
+  ● SELECTED  Data Science Talk    starts Mon 10 Aug 10:30 >= last end Mon 10 Aug 10:30
+  ○ skip      Career Workshop      starts Mon 10 Aug 11:30 < last end Mon 10 Aug 12:00 (overlaps)
+  ● SELECTED  Chess Tournament     starts Mon 10 Aug 12:00 >= last end Mon 10 Aug 12:00
+  ○ skip      AI Seminar           starts Mon 10 Aug 13:00 < last end Mon 10 Aug 13:30 (overlaps)
+  ● SELECTED  Study Group          starts Mon 10 Aug 14:30 >= last end Mon 10 Aug 13:30
 
-Maximum non-overlapping activities: 3
-Validation (exhaustive search): optimal = 3 -> OPTIMAL
+Result - maximum non-overlapping activities:
+╭────────────────────┬──────────────────┬──────────────────╮
+│ Activity           │ Start            │ End              │
+├────────────────────┼──────────────────┼──────────────────┤
+│ Algorithms Lecture │ Mon 10 Aug 09:00 │ Mon 10 Aug 10:30 │
+│ Data Science Talk  │ Mon 10 Aug 10:30 │ Mon 10 Aug 12:00 │
+│ Chess Tournament   │ Mon 10 Aug 12:00 │ Mon 10 Aug 13:30 │
+│ Study Group        │ Mon 10 Aug 14:30 │ Mon 10 Aug 15:30 │
+╰────────────────────┴──────────────────┴──────────────────╯
 
-Run again with new input? (y/n): 
+Activities selected: 4 out of 7
