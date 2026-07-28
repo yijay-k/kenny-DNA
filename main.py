@@ -13,13 +13,13 @@ menu. Each problem also runs on its own, e.g.:
 from ui import banner, box, paint, read_line
 import problem1_activity_selection as p1
 import problem2_coin_change as p2
-import problem3_astar_shortest_path as p3
+import problem3_tsp_heuristic as p3
 
 
 MENU = {
     "1": ("Activity Selection      " + paint("(Greedy)", "2"), p1.run),
     "2": ("Coin Change             " + paint("(Dynamic Programming)", "2"), p2.run),
-    "3": ("Shortest Path / A*      " + paint("(Heuristic)", "2"), p3.run),
+    "3": ("Travelling Salesman     " + paint("(Heuristic)", "2"), p3.run),
 }
 
 

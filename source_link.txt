@@ -7,7 +7,7 @@ https://github.com/yijay-k/kenny-DNA
 The repository contains:
   - problem1_activity_selection.py  : Greedy
   - problem2_coin_change.py         : Dynamic Programming
-  - problem3_astar_shortest_path.py : Heuristic (A* Search)
+  - problem3_tsp_heuristic.py       : Heuristic (Nearest Neighbour)
   - main.py                         : optional menu launcher for all three
   - ui.py                           : shared terminal UI + input helpers
   - samples/                        : sample outputs for each problem
@@ -16,5 +16,5 @@ The repository contains:
 To run (any one problem, or the menu):
   python3 problem1_activity_selection.py
   python3 problem2_coin_change.py
-  python3 problem3_astar_shortest_path.py
+  python3 problem3_tsp_heuristic.py
   python3 main.py

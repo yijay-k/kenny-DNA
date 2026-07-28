@@ -12,7 +12,7 @@ focus stays on demonstrating each algorithm clearly.
 |---|----------|---------|-----------|------|
 | 1 | Greedy | Activity Selection | Sort by end time + greedy pick | `problem1_activity_selection.py` |
 | 2 | Dynamic Programming | Coin Change (min coins) | Bottom-up `dp[]` table | `problem2_coin_change.py` |
-| 3 | Heuristic | Shortest Path on a map | A* Search | `problem3_astar_shortest_path.py` |
+| 3 | Heuristic | Travelling Salesman | Nearest Neighbour | `problem3_tsp_heuristic.py` |
 
 `main.py` is a menu that launches all three; each problem also runs on its own.
 
@@ -23,7 +23,7 @@ Requires **Python 3** only — no external libraries.
 ```bash
 python3 problem1_activity_selection.py     # Greedy
 python3 problem2_coin_change.py            # Dynamic Programming
-python3 problem3_astar_shortest_path.py    # Heuristic (A*)
+python3 problem3_tsp_heuristic.py          # Heuristic (Nearest Neighbour)
 python3 main.py                            # menu for all three
 ```
 
@@ -45,15 +45,16 @@ typing, so nothing to validate). The run is shown in two clear steps:
 following the recorded "last coin" back from the target down to 0. It finishes
 with a highlighted answer (e.g. `37c = 20c + 10c + 5c + 1c + 1c`).
 
-**Problem 3 – Shortest Path / A\* (Heuristic).** A **fixed map** of real
-locations around Sunway (Sunway University, Sunway Square, Taylor's University,
-Monash University, ISKL) with approximate road distances. The user only picks a
-**starting location**; A* then finds the shortest route and distance to each
-other location, guided by a straight-line-distance heuristic.
+**Problem 3 – Travelling Salesman / Nearest Neighbour (Heuristic).** A **fixed**
+set of cities (Sunway University, Sunway Square, Taylor's University, Monash
+University, ISKL). The user only picks the **starting city**; the program then
+builds a tour with the Nearest Neighbour heuristic (always move to the closest
+unvisited city, then return to the start) and reports the route, each leg, and
+the total distance. It is a fast greedy approximation, not guaranteed optimal —
+brute force would need `(n-1)!` route checks.
 
-> Distances in Problem 3 are approximate (km). Replace them with exact Google
-> Maps values if precise figures are needed — only the numbers in `ROADS` and
-> the positions in `LOCATIONS` need editing.
+> Coordinates in Problem 3 are placeholder `(x, y)` map units. Replace them in
+> `CITIES` with real surveyed positions/distances if exact figures are needed.
 
 ## Constraints honoured
 
@@ -69,7 +70,7 @@ other location, guided by a straight-line-distance heuristic.
 ```
 problem1_activity_selection.py    # Greedy
 problem2_coin_change.py           # Dynamic Programming
-problem3_astar_shortest_path.py   # Heuristic (A*)
+problem3_tsp_heuristic.py         # Heuristic (Nearest Neighbour)
 main.py                           # optional menu launcher
 ui.py                             # shared terminal UI + input helpers
 samples/                          # sample outputs for each problem

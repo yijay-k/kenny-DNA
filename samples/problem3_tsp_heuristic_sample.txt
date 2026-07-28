@@ -1,0 +1,49 @@
+SAMPLE RUN - Problem 3: Travelling Salesman (Nearest Neighbour)
+Command : python3 problem3_tsp_heuristic.py
+Input   : menu choice [1]  ->  start = Sunway University   (cities are fixed)
+======================================================================
+╭──────────────────────────────────────────────────────────────────╮
+│ 🧭 Problem 3 · Travelling Salesman (Nearest Neighbour Heuristic) │
+╰──────────────────────────────────────────────────────────────────╯
+
+━━━  🧭 Problem 3 · Travelling Salesman  (Nearest Neighbour)  ━━━
+
+Fixed map of cities (placeholder x, y positions):
+╭─────────────────────┬────┬───╮
+│ City                │ x  │ y │
+├─────────────────────┼────┼───┤
+│ Sunway University   │ 2  │ 2 │
+│ Sunway Square       │ 4  │ 5 │
+│ Taylor's University │ 6  │ 2 │
+│ Monash University   │ 5  │ 8 │
+│ ISKL                │ 10 │ 6 │
+╰─────────────────────┴────┴───╯
+
+Checking every route would mean (5-1)! = 24 tours. Nearest Neighbour instead just keeps moving to the closest city.
+
+╭───────────────────────────╮
+│ Choose the STARTING city: │
+│                           │
+│ [1]  Sunway University    │
+│ [2]  Sunway Square        │
+│ [3]  Taylor's University  │
+│ [4]  Monash University    │
+│ [5]  ISKL                 │
+╰───────────────────────────╯
+Your choice ▶ 
+Nearest Neighbour tour from Sunway University:
+  Route: Sunway University -> Sunway Square -> Monash University -> ISKL -> Taylor's University -> Sunway University
+  Leg-by-leg distances:
+    Sunway University -> Sunway Square: 3.61
+    Sunway Square -> Monash University: 3.16
+    Monash University -> ISKL: 5.39
+    ISKL -> Taylor's University: 5.66
+    Taylor's University -> Sunway University: 4.00
+
+╭────────────────────────────────────────╮
+│ ANSWER                                 │
+│                                        │
+│ Total tour distance: 21.81 (map units) │
+╰────────────────────────────────────────╯
+
+Note: Nearest Neighbour is a heuristic - it finds a good tour quickly but not always the shortest possible one.
