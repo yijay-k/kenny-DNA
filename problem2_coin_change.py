@@ -23,8 +23,9 @@ from ui import paint, box, section, table, choose
 COINS = [50, 20, 10, 5, 1]
 
 # Fixed set of amounts the user can choose from (cents). Using a menu instead
-# of typed input means there is no invalid data to guard against.
-AMOUNTS = [8, 18, 27, 37, 63, 88]
+# of typed input means there is no invalid data to guard against. Kept small so
+# the full DP table (every amount from 0 to the target) fits on screen.
+AMOUNTS = [8, 18, 27, 37]
 
 
 def coin_change_dp(coins, amount):
@@ -60,14 +61,6 @@ def coin_change_dp(coins, amount):
     return dp[amount], combination, dp, choice
 
 
-def group_combination(combination):
-    """Turn [50,20,20,5] into '1 x 50c + 2 x 20c + 1 x 5c'."""
-    counts = {}
-    for coin in combination:
-        counts[coin] = counts.get(coin, 0) + 1
-    return "  +  ".join(f"{counts[c]} x {c}c" for c in COINS if c in counts)
-
-
 def run():
     print(section("🪙 Problem 2 · Coin Change  (Dynamic Programming)"))
     print("Fixed coin denominations (cents): "
@@ -79,24 +72,40 @@ def run():
 
     min_coins, combination, dp, choice = coin_change_dp(COINS, amount)
 
-    # Show the DP table so the overlapping-subproblem decomposition is visible.
-    if amount <= 30:
-        rows = [[str(a), str(dp[a])] for a in range(amount + 1)]
-        print(paint("\nDP table  dp[a] = fewest coins to make amount a:", "1"))
-        print(table(["amount", "dp[a]"], rows))
+    print("\nGoal: make " + paint(f"{amount}c", "1")
+          + " using the FEWEST coins. The program does this in 2 steps.")
 
-    print("\nMinimum coins to make " + paint(f"{amount}c", "1") + ": "
-          + paint(str(min_coins), "1"))
-    if combination:
-        print("Coins used: " + paint(group_combination(combination), "1"))
-        # Show the recurrence chain (proof of optimal substructure).
-        print(paint("\nHow dp[amount] was built (optimal substructure):", "1"))
-        a = amount
-        while a > 0:
-            c = choice[a]
-            print(f"  dp[{a}] = dp[{a - c}] + 1 = {dp[a - c]} + 1 = {dp[a]}   (use {c}c)")
-            a -= c
-        print("  dp[0] = 0   (base case)")
+    # --- STEP 1: fill the table for EVERY amount from 0 to the target --------
+    print(paint(f"\nSTEP 1 - Work out the fewest coins for every amount from 0 to {amount}.", "1"))
+    print(paint("  dp[a]     = fewest coins needed to make amount a", "2"))
+    print(paint("  last coin = the coin we added to reach a (remembered for Step 2)", "2"))
+    print(paint("  Each amount reuses the smaller amounts already solved above it.", "2"))
+    rows = []
+    for a in range(amount + 1):
+        last = "-" if choice[a] < 0 else f"{choice[a]}c"
+        rows.append([str(a), str(dp[a]), last])
+    print(table(["amount a", "dp[a]", "last coin"], rows))
+    print("So the fewest coins for " + paint(f"{amount}c", "1") + " is "
+          + paint(f"dp[{amount}] = {min_coins}", "1") + ".")
+
+    # --- STEP 2: rebuild the actual coins by following 'last coin' -----------
+    print(paint(f"\nSTEP 2 - Rebuild the coins by following 'last coin' back from {amount} to 0:", "1"))
+    a = amount
+    while a > 0:
+        c = choice[a]
+        print(f"  at {a:>3}c  ->  last coin {c:>2}c  ->  {a - c}c left")
+        a -= c
+    print(f"  at   0c  ->  done")
+
+    # --- Clear final answer --------------------------------------------------
+    coins_str = "  +  ".join(f"{c}c" for c in combination)
+    print()
+    print(box([
+        paint("ANSWER", "1"),
+        "",
+        f"Fewest coins to make {amount}c : {min_coins}",
+        f"Coins used : {coins_str}",
+    ]))
 
 
 if __name__ == "__main__":

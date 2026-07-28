@@ -16,17 +16,69 @@ Fixed coin denominations (cents): 50c, 20c, 10c, 5c, 1c
 │ [2]  18c                  │
 │ [3]  27c                  │
 │ [4]  37c                  │
-│ [5]  63c                  │
-│ [6]  88c                  │
 ╰───────────────────────────╯
 Your choice ▶ 
-Minimum coins to make 37c: 5
-Coins used: 1 x 20c  +  1 x 10c  +  1 x 5c  +  2 x 1c
+Goal: make 37c using the FEWEST coins. The program does this in 2 steps.
 
-How dp[amount] was built (optimal substructure):
-  dp[37] = dp[17] + 1 = 4 + 1 = 5   (use 20c)
-  dp[17] = dp[7] + 1 = 3 + 1 = 4   (use 10c)
-  dp[7] = dp[2] + 1 = 2 + 1 = 3   (use 5c)
-  dp[2] = dp[1] + 1 = 1 + 1 = 2   (use 1c)
-  dp[1] = dp[0] + 1 = 0 + 1 = 1   (use 1c)
-  dp[0] = 0   (base case)
+STEP 1 - Work out the fewest coins for every amount from 0 to 37.
+  dp[a]     = fewest coins needed to make amount a
+  last coin = the coin we added to reach a (remembered for Step 2)
+  Each amount reuses the smaller amounts already solved above it.
+╭──────────┬───────┬───────────╮
+│ amount a │ dp[a] │ last coin │
+├──────────┼───────┼───────────┤
+│ 0        │ 0     │ -         │
+│ 1        │ 1     │ 1c        │
+│ 2        │ 2     │ 1c        │
+│ 3        │ 3     │ 1c        │
+│ 4        │ 4     │ 1c        │
+│ 5        │ 1     │ 5c        │
+│ 6        │ 2     │ 5c        │
+│ 7        │ 3     │ 5c        │
+│ 8        │ 4     │ 5c        │
+│ 9        │ 5     │ 5c        │
+│ 10       │ 1     │ 10c       │
+│ 11       │ 2     │ 10c       │
+│ 12       │ 3     │ 10c       │
+│ 13       │ 4     │ 10c       │
+│ 14       │ 5     │ 10c       │
+│ 15       │ 2     │ 10c       │
+│ 16       │ 3     │ 10c       │
+│ 17       │ 4     │ 10c       │
+│ 18       │ 5     │ 10c       │
+│ 19       │ 6     │ 10c       │
+│ 20       │ 1     │ 20c       │
+│ 21       │ 2     │ 20c       │
+│ 22       │ 3     │ 20c       │
+│ 23       │ 4     │ 20c       │
+│ 24       │ 5     │ 20c       │
+│ 25       │ 2     │ 20c       │
+│ 26       │ 3     │ 20c       │
+│ 27       │ 4     │ 20c       │
+│ 28       │ 5     │ 20c       │
+│ 29       │ 6     │ 20c       │
+│ 30       │ 2     │ 20c       │
+│ 31       │ 3     │ 20c       │
+│ 32       │ 4     │ 20c       │
+│ 33       │ 5     │ 20c       │
+│ 34       │ 6     │ 20c       │
+│ 35       │ 3     │ 20c       │
+│ 36       │ 4     │ 20c       │
+│ 37       │ 5     │ 20c       │
+╰──────────┴───────┴───────────╯
+So the fewest coins for 37c is dp[37] = 5.
+
+STEP 2 - Rebuild the coins by following 'last coin' back from 37 to 0:
+  at  37c  ->  last coin 20c  ->  17c left
+  at  17c  ->  last coin 10c  ->  7c left
+  at   7c  ->  last coin  5c  ->  2c left
+  at   2c  ->  last coin  1c  ->  1c left
+  at   1c  ->  last coin  1c  ->  0c left
+  at   0c  ->  done
+
+╭───────────────────────────────────────────────╮
+│ ANSWER                                        │
+│                                               │
+│ Fewest coins to make 37c : 5                  │
+│ Coins used : 20c  +  10c  +  5c  +  1c  +  1c │
+╰───────────────────────────────────────────────╯

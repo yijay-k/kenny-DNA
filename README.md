@@ -39,10 +39,11 @@ and reports the maximum set of non-overlapping activities. No user input.
 
 **Problem 2 – Coin Change (Dynamic Programming).** **Fixed** denominations
 `1, 5, 10, 20, 50` cents. The user picks a target amount **from a menu** (no
-typing, so nothing to validate). The program builds the `dp[]` table bottom-up,
-prints it, gives the minimum number of coins and the coins used, and shows the
-recurrence chain (`dp[37] = dp[17] + 1 …`) as the visible proof of optimal
-substructure.
+typing, so nothing to validate). The run is shown in two clear steps:
+**Step 1** builds a table of the fewest coins for *every* amount from 0 to the
+target (each row also records the "last coin" added); **Step 2** rebuilds the
+actual coins by following that "last coin" back from the target down to 0. It
+finishes with a highlighted answer (e.g. `37c = 20c + 10c + 5c + 1c + 1c`).
 
 **Problem 3 – Shortest Path / A\* (Heuristic).** A **fixed map** of real
 locations around Sunway (Sunway University, Sunway Square, Taylor's University,
