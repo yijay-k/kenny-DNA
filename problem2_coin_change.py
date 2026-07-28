@@ -17,15 +17,14 @@ All core logic (the DP table + reconstruction) is written manually.
 Run directly:  python3 problem2_coin_change.py
 """
 
-from ui import paint, box, section, table, choose
+from ui import paint, box, section, choose
 
 # Fixed denominations (cents). Kept in descending order for a tidy summary.
 COINS = [50, 20, 10, 5, 1]
 
 # Fixed set of amounts the user can choose from (cents). Using a menu instead
-# of typed input means there is no invalid data to guard against. Kept small so
-# the full DP table (every amount from 0 to the target) fits on screen.
-AMOUNTS = [8, 18, 27, 37]
+# of typed input means there is no invalid data to guard against.
+AMOUNTS = [8, 16, 23, 37, 42, 58, 76, 99]
 
 
 def coin_change_dp(coins, amount):
@@ -61,6 +60,18 @@ def coin_change_dp(coins, amount):
     return dp[amount], combination, dp, choice
 
 
+def print_dp_strip(dp, per_row=20, w=4):
+    """
+    Print the dp values compactly as a horizontal strip (amount on top, dp
+    below), wrapping every `per_row` amounts so long tables stay short.
+    """
+    for start in range(0, len(dp), per_row):
+        idxs = range(start, min(start + per_row, len(dp)))
+        print(paint("  a :", "2") + "".join(f"{a:>{w}}" for a in idxs))
+        print(paint("  dp:", "2") + "".join(f"{dp[a]:>{w}}" for a in idxs))
+        print()
+
+
 def run():
     print(section("🪙 Problem 2 · Coin Change  (Dynamic Programming)"))
     print("Fixed coin denominations (cents): "
@@ -76,15 +87,9 @@ def run():
           + " using the FEWEST coins. The program does this in 2 steps.")
 
     # --- STEP 1: fill the table for EVERY amount from 0 to the target --------
-    print(paint(f"\nSTEP 1 - Work out the fewest coins for every amount from 0 to {amount}.", "1"))
-    print(paint("  dp[a]     = fewest coins needed to make amount a", "2"))
-    print(paint("  last coin = the coin we added to reach a (remembered for Step 2)", "2"))
-    print(paint("  Each amount reuses the smaller amounts already solved above it.", "2"))
-    rows = []
-    for a in range(amount + 1):
-        last = "-" if choice[a] < 0 else f"{choice[a]}c"
-        rows.append([str(a), str(dp[a]), last])
-    print(table(["amount a", "dp[a]", "last coin"], rows))
+    print(paint(f"\nSTEP 1 - Work out the fewest coins (dp) for every amount from 0 to {amount},", "1"))
+    print(paint("         each one reusing the smaller amounts already solved:", "1"))
+    print_dp_strip(dp)
     print("So the fewest coins for " + paint(f"{amount}c", "1") + " is "
           + paint(f"dp[{amount}] = {min_coins}", "1") + ".")
 
